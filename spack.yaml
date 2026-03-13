@@ -1,0 +1,50 @@
+# This is a Spack Environment file.
+#
+# It describes a set of packages to be installed, along with
+# configuration settings.
+spack:
+  # add package specs to the `specs` list
+  specs:
+  - pumi
+  - scorec.pumi@develop +int64 +shared simmodsuite=full ~simmodsuite_version_check +zoltan ^zoltan+parmetis~fortran ^scorec.simmetrix-simmodsuite@2025.0-250108dev
+  view: false
+  config:
+    install_tree:
+      root: /global/cfs/cdirs/m499/cws/scorecSpackEnv/spack110/install
+    misc_cache: /global/cfs/cdirs/m499/cws/scorecSpackEnv/spack110/misc_cache
+    build_stage: /global/cfs/cdirs/m499/cws/scorecSpackEnv/spack110/build_stage
+  concretizer:
+    unify: false
+  repos:
+    scorec: /global/cfs/cdirs/m499/cws/scorecSpackRepo/spack_repo/scorec
+  modules:
+    default:
+      roots:
+        lmod: /global/cfs/cdirs/m499/cws/scorecSpackEnv/spack110/lmod
+      lmod:
+        core_compilers:
+        - gcc@12.3.0/jn3n7jeg75if2xb6guz6lom3u2jvzonq
+        hierarchy:
+        - mpi 
+        projections:
+          all: '{name}/{version}'
+          ^simmetrix-simmodsuite: '{name}/{version}-simmodsuite-{^simmetrix-simmodsuite.version}'
+        pumi:
+          suffixes:
+            ^metis+int64: int64
+            ^metis~int64: int32
+            +shared: shared
+            +int64: mdsIdLong
+          environment:
+            set:
+              'MPICH_GPU_SUPPORT_ENABLED': '0'
+        simmetrix-simmodsuite:
+          environment:
+            set:
+              SIM_LICENSE_FILE: /global/cfs/cdirs/m499/cws/license.txt-30042026
+              'MPICH_GPU_SUPPORT_ENABLED': '0'
+        all:
+          environment:
+            set:
+              '{name}_RHEL9_ROOT': '{prefix}'
+
