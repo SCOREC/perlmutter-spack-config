@@ -15,6 +15,7 @@ spack env activate scorecSpackEnv
 # edit the hardcoded paths in the yaml file
 spack concretize
 spack install
+spack module lmod refresh
 ```
 
 ## install more packages
